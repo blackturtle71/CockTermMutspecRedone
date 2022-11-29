@@ -1,8 +1,8 @@
 library(magrittr)
 library(dplyr)
 
-#PATH_TO_CODON_USAGE = "/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_cock.csv"
-PATH_TO_CODON_USAGE = "/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_term.csv"
+PATH_TO_CODON_USAGE = "/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_cock.csv"
+#PATH_TO_CODON_USAGE = "/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_term.csv"
 df_codon_usage_table <- read.csv(file = PATH_TO_CODON_USAGE)
 
 vec_all = c('TTC','TTT','TCC','TCT','TAC','TAT','TGC','TGT',
@@ -80,5 +80,5 @@ for (org in 1:nrow(df_try))
   final = rbind(final,sp_out)
 }
 names(final) = c('species_name', 'med_c', 'med_a')
-#write.csv(final, file = 'GTasymmetry_cock.csv')
-write.csv(final, file = 'GTasymmetry_term.csv')
+write.csv(final, file = 'GTasymmetry_cock.csv')
+#write.csv(final, file = 'GTasymmetry_term.csv')

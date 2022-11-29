@@ -11,8 +11,8 @@ translation['ATA'] = 'M'
 translation['AGA'] = '_'
 translation['AGG'] = '_'
 
-#PATH_TO_GB = '../../raw/blattodea_genbank/cockroach_complete_refseq.gb'
-PATH_TO_GB = '../../raw/blattodea_genbank/TermiteRefSeqs.gb'
+#PATH_TO_GB = '../../raw/blattodea_genbank/new/Cockroach_complete_genome_refseq.gb'
+PATH_TO_GB = '../../raw/blattodea_genbank/new/Termites_complete_genome_refseq.gb'
 PATH_TO_CODON_USAGE_TABLE = '../../interim/DescriptiveStat/codonusage_table_term.csv'
 #bc = SeqIO.parse(PATH_TO_GB, 'genbank')
 item_table = ['Species_name','GenbankID', 'Taxonomy', 'Gene_name','Gene_start_end_and_trend', 'GeneID', 'Aminoacids_from_genbank',
