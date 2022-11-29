@@ -1,3 +1,10 @@
+library(magrittr)
+library(dplyr)
+
+#PATH_TO_CODON_USAGE = "/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_cock.csv"
+PATH_TO_CODON_USAGE = "/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_term.csv"
+df_codon_usage_table <- read.csv(file = PATH_TO_CODON_USAGE)
+
 vec_all = c('TTC','TTT','TCC','TCT','TAC','TAT','TGC','TGT',
             'TTA','TTG','TCA','TCG','TAA','TAG','TGA','TGG',
             'CTC','CTT','CCC','CCT','CAC','CAT','CGC','CGT',
@@ -16,14 +23,14 @@ needed_codons = c('TTC','TCC','TAC','TGC',
                   'GTC','GCC','GAC','GGC',
                   'GTA','GCA','GAA','GGA')
 
-df_codons_trophl = df_sgc %>% select(species_name, gene_name, foraging_niche,all_of(vec_all))
+df_codons = df_codon_usage_table %>% select(Species_name, Gene_name,all_of(vec_all))
 
-sp_sum_gen = data.frame(unique(df_codons_trophl$species_name))
+sp_sum_gen = data.frame(unique(df_codons$Species_name))
 
 for ( codon in vec_all)
 {
   
-  sum_of_codon = aggregate(df_codons_trophl[ ,codon], by = list(df_codons_trophl$species_name), FUN = 'sum')[2]
+  sum_of_codon = aggregate(df_codons[ ,codon], by = list(df_codons$Species_name), FUN = 'sum')[2]
   sp_sum_gen = cbind(sp_sum_gen, sum_of_codon)
   
 }
@@ -52,8 +59,7 @@ for (i in 1:nrow(sp_sum_gen))
 
 names(codon_norm) = c('species_name', needed_codons)
 codon_norm = codon_norm %>% select(-c('TAA','AGA'))
-df_eco = df_codons_trophl[,c(1,3)]
-codon_norm = merge(codon_norm, df_eco)
+
 
 df_try = data.frame(unique(codon_norm))
 
@@ -70,7 +76,9 @@ for (org in 1:nrow(df_try))
   
   med_c = median(as.numeric(vec_of_c), na.rm = TRUE)
   med_a = median(as.numeric(vec_of_a), na.rm = TRUE)
-  sp_out = data.frame(sp_r$species_name, med_c, med_a, sp_r$foraging_niche) 
+  sp_out = data.frame(sp_r$species_name, med_c, med_a) 
   final = rbind(final,sp_out)
 }
-names(final) = c('species_name', 'med_c', 'med_a', 'foraging_niche')
+names(final) = c('species_name', 'med_c', 'med_a')
+#write.csv(final, file = 'GTasymmetry_cock.csv')
+write.csv(final, file = 'GTasymmetry_term.csv')

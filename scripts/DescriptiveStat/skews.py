@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 PATH_TO_COCK = '../../interim/DescriptiveStat/codonusage_table_cock.csv'
 PATH_TO_TERM = '../../interim/DescriptiveStat/codonusage_table_term.csv'
 
+# we're using the light strand but descript the heavy one, so every nucleotide is inverted
 
 def get_skew_df(codon_table):
     codon_table = pd.read_csv(codon_table)
 
-    GAskew = (codon_table['nG'] - codon_table['nA'])/(codon_table['nG'] + codon_table['nA'])
-    TCskew = (codon_table['nC'] - codon_table['nT'])/(codon_table['nC'] + codon_table['nT'])
-    Stg_Sac = (codon_table['neutralG'] + codon_table['neutralT']) - (codon_table['neutralA'] + codon_table['neutralC'])
+    GAskew = (codon_table['nC'] - codon_table['nT'])/(codon_table['nC'] + codon_table['nT'])
+    TCskew = (codon_table['nG'] - codon_table['nA'])/(codon_table['nG'] + codon_table['nA'])
+    Stg_Sac = (codon_table['neutralC'] + codon_table['neutralA']) - (codon_table['neutralT'] + codon_table['neutralG'])
     IDs = codon_table['Species_name']
 
     skews = IDs.to_frame().merge(GAskew.rename('GAskew'), left_index=True, right_index=True)
@@ -29,7 +30,7 @@ colors = ['#74B72E', '#466D1D']
 for patch, color in zip(GAskew_bp['boxes'], colors):
     patch.set_facecolor(color)
 plt.xticks([1, 2], ['Cockroaches', 'Termites'])
-plt.ylabel('GC skew')
+plt.ylabel('GA skew')
 plt.savefig('../../figures/GAskew.PDF', format='pdf')
 plt.clf()
 
