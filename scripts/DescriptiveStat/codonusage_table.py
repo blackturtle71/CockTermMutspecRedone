@@ -11,9 +11,9 @@ translation['ATA'] = 'M'
 translation['AGA'] = '_'
 translation['AGG'] = '_'
 
-#PATH_TO_GB = '../../raw/blattodea_genbank/new/Cockroach_complete_genome_refseq.gb'
-PATH_TO_GB = '../../raw/blattodea_genbank/new/Termites_complete_genome_refseq.gb'
-PATH_TO_CODON_USAGE_TABLE = '../../interim/DescriptiveStat/codonusage_table_term.csv'
+PATH_TO_GB = '../../raw/blattodea_genbank/cockroach_complete_refseq.gb'
+#PATH_TO_GB = '../../raw/blattodea_genbank/TermiteRefSeqs.gb'
+PATH_TO_CODON_USAGE_TABLE = '../../interim/DescriptiveStat/codonusage_table_cock.csv'
 #bc = SeqIO.parse(PATH_TO_GB, 'genbank')
 item_table = ['Species_name','GenbankID', 'Taxonomy', 'Gene_name','Gene_start_end_and_trend', 'GeneID', 'Aminoacids_from_genbank',
              'Translated_aminoacids_by_Python', 'Not_standart_codons', 'Wrong_amino_num', 'Wrong_nucl_num','wrong_amino_%','Sequence','mtDNA_length',
@@ -51,7 +51,7 @@ for bc in SeqIO.parse(PATH_TO_GB, format='genbank'):
             if 'gene' not in i.qualifiers:
                 items_manage['Gene_name'] = 'NA'
             else:
-                items_manage['Gene_name'] = i.qualifiers['gene']
+                items_manage['Gene_name'] = ''.join(i.qualifiers['gene'])
             items_manage['Gene_start_end_and_trend'] = i.location
             if 'db_xref' not in i.qualifiers:
                 items_manage['GeneID'] = 'NA'
