@@ -1,17 +1,15 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-PATH_TO_COCK = '../../interim/DescriptiveStat/codonusage_table_cock.csv'
-PATH_TO_TERM = '../../interim/DescriptiveStat/codonusage_table_term.csv'
+PATH_TO_COCK = '/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_cock.csv'
+PATH_TO_TERM = '/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codonusage_table_term.csv'
 
-# we're using the light strand but descript the heavy one, so every nucleotide is inverted
 
 def get_skew_df(codon_table):
     codon_table = pd.read_csv(codon_table)
-
-    GAskew = (codon_table['nC'] - codon_table['nT'])/(codon_table['nC'] + codon_table['nT'])
-    TCskew = (codon_table['nG'] - codon_table['nA'])/(codon_table['nG'] + codon_table['nA'])
-    Stg_Sac = (codon_table['neutralC'] + codon_table['neutralA']) - (codon_table['neutralT'] + codon_table['neutralG'])
+    GAskew = (codon_table['nG'] - codon_table['nA'])/(codon_table['nG'] + codon_table['nA'])
+    TCskew = (codon_table['nC'] - codon_table['nT'])/(codon_table['nC'] + codon_table['nT'])
+    Stg_Sac = (codon_table['neutralT'] + codon_table['neutralG']) - (codon_table['neutralA'] + codon_table['neutralC'])
     IDs = codon_table['Species_name']
     genes = codon_table['Gene_name']
 
@@ -35,7 +33,7 @@ term_skew = term_skew.merge(Organism.rename('Organism'), left_index=True, right_
 
 
 skews = pd.concat([cock_skew, term_skew])
-skews.to_csv("../../interim/DescriptiveStat/cock_term_skews.csv", na_rep='NA')
+skews.to_csv("/home/gab/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/cock_term_skews.csv", na_rep='NA')
 
 
 #cock_skew.to_csv("../../interim/DescriptiveStat/cock_skew.csv", na_rep='NA')
