@@ -6,6 +6,7 @@ cock_term_skew$Gene_name <- factor(cock_term_skew$Gene_name, levels = c( "COX1",
 
 #74B72E - cock color, #466D1D -term color (didn't use)
 
+# Inverting skew data for these genes, because they are located on a different strand!
 cock_term_skew <- transform(cock_term_skew, TCskew= ifelse(Gene_name == 'ND4L', GAskew, TCskew), GAskew = ifelse(Gene_name == 'ND4L', TCskew, GAskew))
 cock_term_skew <- transform(cock_term_skew, TCskew= ifelse(Gene_name == 'ND4', GAskew, TCskew), GAskew = ifelse(Gene_name == 'ND4', TCskew, GAskew))
 cock_term_skew <- transform(cock_term_skew, TCskew= ifelse(Gene_name == 'ND5', GAskew, TCskew), GAskew = ifelse(Gene_name == 'ND5', TCskew, GAskew))
