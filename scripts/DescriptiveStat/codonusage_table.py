@@ -11,9 +11,9 @@ translation['ATA'] = 'M'
 translation['AGA'] = '_'
 translation['AGG'] = '_'
 
-PATH_TO_GB = '../../raw/blattodea_genbank/cockroach_complete_refseq.gb'
+PATH_TO_GB = '/home/gabs/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/MIDORI/mergedAllGenesBlattodea.gb'
 #PATH_TO_GB = '../../raw/blattodea_genbank/TermiteRefSeqs.gb'
-PATH_TO_CODON_USAGE_TABLE = '../../interim/DescriptiveStat/codonusage_table_cock.csv'
+PATH_TO_CODON_USAGE_TABLE = '/home/gabs/Documents/lab/TermitesAndCockroaches/MutSpec-Redone/interim/DescriptiveStat/codontable_midori_blattodea.csv'
 #bc = SeqIO.parse(PATH_TO_GB, 'genbank')
 item_table = ['Species_name','GenbankID', 'Taxonomy', 'Gene_name','Gene_start_end_and_trend', 'GeneID', 'Aminoacids_from_genbank',
              'Translated_aminoacids_by_Python', 'Not_standart_codons', 'Wrong_amino_num', 'Wrong_nucl_num','wrong_amino_%','Sequence','mtDNA_length',
@@ -115,13 +115,23 @@ for bc in SeqIO.parse(PATH_TO_GB, format='genbank'):
                                 items_manage['neutralT'] += 1
             items_manage['Translated_aminoacids_by_Python'] = trnsl_amino
             items_manage['Neutral_count'] = neuc
-            for nuc in (items_manage['Aminoacids_from_genbank']):
-                if nuc != items_manage['Translated_aminoacids_by_Python'][nucl_c]:
-                    proc_c += 1
-                nucl_c += 1
-            items_manage['wrong_amino_%'] = proc_c * 100 / len(items_manage['Translated_aminoacids_by_Python'])
-            items_manage['Wrong_amino_num'] = proc_c
-            items_manage['Wrong_nucl_num'] = wrong_c
+            '''
+            #blocked it, cuz it was causing some stupid problems I don't know how to solve. Just fuck it for now.
+            #TODO: 
+            Solve it
+            if nuc != items_manage['Translated_aminoacids_by_Python'][nucl_c]:
+            IndexError: string index out of range
+            '''
+            #for nuc in (items_manage['Aminoacids_from_genbank']):
+            #    if nuc != items_manage['Translated_aminoacids_by_Python'][nucl_c]:
+            #        proc_c += 1
+            #    nucl_c += 1
+            #items_manage['wrong_amino_%'] = proc_c * 100 / len(items_manage['Translated_aminoacids_by_Python'])
+            #items_manage['Wrong_amino_num'] = proc_c
+            #items_manage['Wrong_nucl_num'] = wrong_c
+
+
+
             proc_c = 0
             nucl_c = 0
             start_c = 0
@@ -136,4 +146,5 @@ for bc in SeqIO.parse(PATH_TO_GB, format='genbank'):
                 ndc = 1
             for k in items_manage:
                 items_manage[k] = 0
+btable.sort_values(['Species_name', 'Gene_name'], ascending=[True, True], inplace=True)
 btable.to_csv(PATH_TO_CODON_USAGE_TABLE, sep=',')
